@@ -12,27 +12,48 @@ Use helper functions:
 - analyze_text(text)
 Print formatted summary in main.
 """
+import re
 
 def count_characters(text):
     """Count non-space characters in a string."""
-    # TODO: implement
-    pass
+    return len(text.replace(" ", ""))  # remove spaces before counting
 
 def count_words(text):
     """Count number of words in a string."""
-    # TODO: implement
-    pass
+    return len(text.split())
 
 def extract_numbers(text):
     """Return list of integers found in text."""
-    # TODO: implement
-    pass
+    numbers = re.findall(r'\d+', text) # find all sequences of digits
+    return [int(num) for num in numbers]     # convert them to integers
 
 def analyze_text(text):
     """Perform text-based arithmetic analysis."""
-    # TODO: call helper functions and compute total, average, etc.
-    pass
+    char_count = count_characters(text)
+    word_count = count_words(text)
+    numbers = extract_numbers(text)
+
+    # compute sum and average if numbers exist
+    total = sum(numbers)
+    average = total / len(numbers) if numbers else 0
+
+    # return a dictionary with all info
+    return {
+        "characters": char_count,
+        "words": word_count,
+        "numbers": numbers,
+        "sum": total,
+        "average": average
+    }
 
 if __name__ == "__main__":
-    # TODO: read input, call analyze_text(), and print results
-    pass
+    text_input = input("Enter some text: ")
+
+    result = analyze_text(text_input)
+
+    print("\nText Analysis Summary:")
+    print(f"Non-space characters: {result['characters']}")
+    print(f"Word count: {result['words']}")
+    print(f"Numbers found: {result['numbers']}")
+    print(f"Sum of numbers: {result['sum']}")
+    print(f"Average of numbers: {result['average']:.2f}")
